@@ -1,7 +1,6 @@
 import ErrorResponse from "../error/errorResponse";
-import { createNewTodo, getTodoByUser } from "../helper/todoCRUD";
+import { checkExistingTodo, createNewTodo, deleteTodo, getTodoByUser, updateTodo as updateTodoOperation } from "../helper/todoCRUD";
 import {
-  checkExistingUser,
   checkExistingUserWithUserId,
 } from "../helper/userCRUD";
 
@@ -42,3 +41,35 @@ export const getTodo = async (user_id: number) => {
 
   return todosResult.rows; // Return the newly created todo
 };
+
+
+export const todoUpdate = async (title: string, completed: boolean, todoId: number) => {
+
+  // Check if the todo with the given todoid exists
+  const todoExistResult = await checkExistingTodo(todoId);
+
+  // throwing error if the todo doesn't exist 
+  if (todoExistResult.rowCount === 0)
+    throw ErrorResponse.notFound("Todo not found");
+
+  // updating todo with the associated id
+  const todosResult = await updateTodoOperation(title, completed, todoId);
+
+  return todosResult.rows; // Return the newly created todo
+};
+
+export const todoDelete = async (todoId: number) => {
+
+  // Check if the todo with the given todoid exists
+  const todoExistResult = await checkExistingTodo(todoId);
+
+  // throwing error if the todo doesn't exist 
+  if (todoExistResult.rowCount === 0)
+    throw ErrorResponse.notFound("Todo not found");
+
+  // updating todo with the associated id
+  const todosResult = await deleteTodo(todoId);
+
+  return todosResult.rows; // Return the newly created todo
+};
+
