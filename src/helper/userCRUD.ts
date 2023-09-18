@@ -6,8 +6,8 @@ async function checkExistingUser(username: string) {
   ]);
 }
 
-async function checkExistingUserWithUserId(userID: string) {
-  return await pool.query("SELECT id FROM users WHERE id = $1", [userID]);
+async function checkExistingUserWithUserId(userID: number) {
+  return await pool.query("SELECT * FROM users WHERE id = $1", [userID]);
 }
 
 async function createNewUser(username: string) {
