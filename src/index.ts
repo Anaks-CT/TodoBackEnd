@@ -5,6 +5,7 @@ import dbConnection from './config/database';
 import { errorHandler } from './error/errorHandler';
 import userRouter from './routes/user.routes';
 import todoRouter from './routes/todo.routes';
+import notFound from './utils/404';
 
 dotenv.config();
 
@@ -33,7 +34,7 @@ app.get('/', (req, res) => {
   res.send('Hello, this is the root route!');
 }) 
 
-// app.use("*", notFound);
+app.use("*", notFound);
 
 // golbal error handler
 app.use(errorHandler);
