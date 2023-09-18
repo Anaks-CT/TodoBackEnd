@@ -22,8 +22,6 @@ app.use(
   })
 );  
 
-// golbal error handler
-app.use(errorHandler);
 
 // routes
 app.use('/api/v1/user', userRouter)
@@ -35,6 +33,8 @@ app.get('/', (req, res) => {
 
 // app.use("*", notFound);
 
+// golbal error handler
+app.use(errorHandler);
 
 // connecting to database
 dbConnection();
