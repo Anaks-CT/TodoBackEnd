@@ -4,11 +4,18 @@ import {
   checkExistingUserWithUserId,
 } from "../helper/userCRUD";
 
+const invalidId = (user_id: number) => {
+  if(!user_id) throw ErrorResponse.badRequest("Please provide an Id for reference in params")
+}
+
 export const newTodo = async (
   user_id: number,
   title: string,
   completed: boolean = false
 ) => {
+
+  // throwing error if userid is not there
+  invalidId(user_id)
 
   // Check if the user with the given user_id exists
   const userExistsResult = await checkExistingUserWithUserId(user_id);
@@ -28,6 +35,11 @@ export const newTodo = async (
 };
 
 export const getTodo = async (user_id: number) => {
+
+    // throwing error if userid is not there
+    invalidId(user_id)
+
+
   // Check if the user with the given user_id exists
   const userExistsResult = await checkExistingUserWithUserId(user_id);
 
@@ -45,6 +57,10 @@ export const getTodo = async (user_id: number) => {
 
 export const todoUpdate = async (title: string, completed: boolean, todoId: number) => {
 
+    // throwing error if userid is not there
+    invalidId(todoId)
+
+
   // Check if the todo with the given todoid exists
   const todoExistResult = await checkExistingTodo(todoId);
 
@@ -59,6 +75,10 @@ export const todoUpdate = async (title: string, completed: boolean, todoId: numb
 };
 
 export const todoDelete = async (todoId: number) => {
+
+    // throwing error if userid is not there
+    invalidId(todoId)
+
 
   // Check if the todo with the given todoid exists
   const todoExistResult = await checkExistingTodo(todoId);
