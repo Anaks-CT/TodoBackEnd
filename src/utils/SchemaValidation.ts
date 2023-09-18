@@ -15,3 +15,14 @@ export const todoUpdateSchema = yup.object().shape({
       (value) => typeof value === "boolean"
     ),
 });
+
+export const userSchema = yup.object().shape({
+  userName: yup
+  .string()
+  .trim()
+  .required("User name can not be empty")
+  .test("isPerfectString", "Enter a valid Username", (arg) =>
+    /^[A-Za-z ]+$/.test(arg)
+  ),
+});
+
