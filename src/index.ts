@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import dbConnection from './config/database';
 import { errorHandler } from './error/errorHandler';
 import userRouter from './routes/user.routes';
+import todoRouter from './routes/todo.routes';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(
 
 // routes
 app.use('/api/v1/user', userRouter)
+app.use('/api/v1/todo', todoRouter)
 
 app.get('/', (req, res) => {
   console.log('hellow')

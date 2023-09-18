@@ -1,6 +1,6 @@
 import { Client, Pool } from "pg";
 
-const pool = new Pool({
+export const pool = new Pool({
   user: "postgres",
   host: "localhost",
   database: "postgres",
@@ -18,6 +18,9 @@ const dbConnection = async () => {
 
     // Create the user table if it doesn't exist
     await createUserTableIfNotExists();
+
+    // Create the todos table if it doesn't exist
+    await createTodosTableIfNotExists();
   } catch (err) {
     console.error(err);
   } finally {
@@ -60,5 +63,25 @@ async function createUserTableIfNotExists() {
   }
 }
 
+async function createTodosTableIfNotExists() {
+  const tableName = "todos";
+
+  try {
+    const tableExists = await doesTableExist(tableName);
+
+    if (!tableExists) {
+      await pool.query(`
+        CREATE TABLE ${tableName} (
+          id SERIAL PRIMARY KEY,
+          title VARCHAR(255) NOT NULL,
+          user_id INT REFERENCES users(id),
+          completed BOOLEAN DEFAULT false
+        )
+      `);
+    }
+  } catch (error) {
+    console.error("Error creating todos table:", error);
+  }
+}
+
 export default dbConnection;
-export { pool };
