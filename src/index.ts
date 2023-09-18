@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import dbConnection from './config/database';
+import { errorHandler } from './error/errorHandler';
 
 dotenv.config();
 
@@ -23,6 +24,8 @@ app.use(
 
 // app.use("*", notFound);
 
+// golbal error handler
+app.use(errorHandler);
 
 // connecting to database
 dbConnection();
