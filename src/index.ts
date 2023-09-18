@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import dbConnection from './config/database';
 import { errorHandler } from './error/errorHandler';
+import userRouter from './routes/user.routes';
 
 dotenv.config();
 
@@ -15,21 +16,29 @@ app.use(express.urlencoded({ extended: true }));
 // configuring cors
 app.use(  
   cors({ 
-    origin: "*",
+    origin: [process.env.ORIGIN_URL as string],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
   })
 );  
 
+// golbal error handler
+app.use(errorHandler);
+
+// routes
+app.use('/api/v1/user', userRouter)
+
+app.get('/', (req, res) => {
+  console.log('hellow')
+  res.send('Hello, this is the root route!');
+}) 
 
 // app.use("*", notFound);
 
-// golbal error handler
-app.use(errorHandler);
 
 // connecting to database
 dbConnection();
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, () => { 
   console.log(`Server is running at http://localhost:${process.env.PORT}`);
 });
