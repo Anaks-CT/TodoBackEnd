@@ -107,11 +107,13 @@ export const todoSearchService = async (
   filterCompleted?: boolean,
   sortBy?: "title" | "completed"
 ) => {
-    // throwing error if userid is not there
-    invalidId(userId);
+  // throwing error if userid is not there
+  invalidId(userId);
 
-    if(page < 1) throw ErrorResponse.badRequest("Page number cannot be less than 1")
-    if(pageSize < 1) throw ErrorResponse.badRequest("Page size cannot be less than 1")
+  if (page < 1)
+    throw ErrorResponse.badRequest("Page number cannot be less than 1");
+  if (pageSize < 1)
+    throw ErrorResponse.badRequest("Page size cannot be less than 1");
 
   // Check if the user with the given user_id exists
   const userExistsResult = await checkExistingUserWithUserId(userId);
@@ -119,7 +121,6 @@ export const todoSearchService = async (
   // throwing error if the user doesn't exist with the give user id
   if (userExistsResult.rowCount === 0)
     throw ErrorResponse.notFound("User not found");
-
 
   // updating todo with the associated id
   const todosResult = await getTodosWithOptions(
@@ -131,11 +132,5 @@ export const todoSearchService = async (
     sortBy === "title" ? "title" : "completed"
   );
 
-  // You can also retrieve the total count of todos for pagination purposes
-
-  const totalCountResult = await totalTodos(userId);
-
-  const totalPages = Math.ceil(totalCountResult / pageSize);
-
-  return { ...todosResult }; // Return all the details
+  return todosResult; // Return all the details
 };

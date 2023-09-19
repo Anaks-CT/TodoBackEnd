@@ -10,5 +10,3 @@ export const userSignup = expressAsyncHandler(async (req, res) => {
     .status(201)
     .json({ success: true, message: "User registered successfully" });
 });
-
-

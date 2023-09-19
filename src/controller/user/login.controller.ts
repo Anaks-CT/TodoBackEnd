@@ -7,5 +7,5 @@ export const userLogin = expressAsyncHandler(async (req, res) => {
     const userId = await login(userName); // will remove this code and the code which returns in the service
   
     // Login successful
-    res.status(200).json({ success: true, message: "Login successfull", userId });
+    res.send({ success: true, message: "Login successfull", userId });
   });

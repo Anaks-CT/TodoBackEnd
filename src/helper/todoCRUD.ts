@@ -1,10 +1,10 @@
 import { pool } from "../config/database";
 
-async function createNewTodo(
+export const createNewTodo = async (
   title: string,
   user_id: number,
   completed: boolean
-) {
+) => {
   return await pool.query(
     `
     INSERT INTO todos (title, user_id, completed)
@@ -15,7 +15,7 @@ async function createNewTodo(
   );
 }
 
-async function getTodoByUser(userId: number, page: number = 1, pageSize: number = 5) {
+export const getTodoByUser = async (userId: number, page: number = 1, pageSize: number = 5) => {
   // Calculate the offset based on the page number and page size
   const offset = (page - 1) * pageSize;
 
@@ -33,7 +33,7 @@ async function getTodoByUser(userId: number, page: number = 1, pageSize: number 
   return await pool.query(queryString, queryParams);
 }
 
-async function totalTodos(userId: number) {
+export const totalTodos = async(userId: number) => {
   const totalCountQuery = `
     SELECT COUNT(*) as total_count
     FROM todos
@@ -44,11 +44,11 @@ async function totalTodos(userId: number) {
   return totalCountResult.rows[0].total_count;
 }
 
-async function checkExistingTodo(todoId: number) {
+export const checkExistingTodo = async (todoId: number) => {
   return await pool.query("SELECT * FROM todos WHERE id = $1", [todoId]);
 }
 
-async function deleteTodo(todoId: number) {
+export const deleteTodo = async (todoId: number) => {
   return await pool.query(
     `
   DELETE FROM todos
@@ -59,11 +59,11 @@ async function deleteTodo(todoId: number) {
   );
 }
 
-async function updateTodo(
+export const updateTodo = async(
   title: string | undefined,
   completed: boolean | undefined,
   todoId: number
-) {
+) => {
   let queryString = "";
   const queryParams = [];
 
@@ -96,8 +96,7 @@ async function updateTodo(
   return await pool.query(queryString, queryParams);
 }
 
-async function getTodosWithOptions(userId: number, page: number = 1, pageSize: number = 5, searchQuery?: string, filterCompleted?: boolean, sortBy?: 'title' | 'completed') {
-  console.log(filterCompleted)
+export const getTodosWithOptions = async (userId: number, page: number = 1, pageSize: number = 5, searchQuery?: string, filterCompleted?: boolean, sortBy?: 'title' | 'completed') => {
   // Calculate the offset based on the page number and page size
   const offset = (page - 1) * pageSize;
 
@@ -179,5 +178,4 @@ async function getTodosWithOptions(userId: number, page: number = 1, pageSize: n
 
 
 
-export { createNewTodo, getTodoByUser, updateTodo, checkExistingTodo, deleteTodo, totalTodos, getTodosWithOptions };
  
