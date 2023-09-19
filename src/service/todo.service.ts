@@ -1,5 +1,5 @@
 import ErrorResponse from "../error/errorResponse";
-import { checkExistingTodo, createNewTodo, deleteTodo, getTodoByUser, updateTodo as updateTodoOperation } from "../helper/todoCRUD";
+import { checkExistingTodo, createNewTodo, deleteTodo, getTodoByUser, getTodosWithOptions, totalTodos, updateTodo as updateTodoOperation } from "../helper/todoCRUD";
 import {
   checkExistingUserWithUserId,
 } from "../helper/userCRUD";
@@ -50,8 +50,10 @@ export const getTodo = async (user_id: number) => {
   // Insert a new todo record associated with the user
 
   const todosResult = await getTodoByUser(user_id);
+  const totaltodo = await totalTodos(user_id)
 
-  return todosResult.rows; // Return the newly created todo
+
+  return {todos: todosResult.rows, totaltodo}; 
 };
 
 
@@ -90,6 +92,30 @@ export const todoDelete = async (todoId: number) => {
   // updating todo with the associated id
   const todosResult = await deleteTodo(todoId);
 
-  return todosResult.rows; // Return the newly created todo
+  return todosResult.rows; // Return the deleted  todo
 };
 
+
+export const todoSearchService = async (userId: number, page: number, pageSize: number, searchQuery: string, filterCompleted?: boolean, sortBy?: 'title' | 'completed') => {
+
+
+  // Check if the user with the given user_id exists
+  const userExistsResult = await checkExistingUserWithUserId(userId);
+
+  // throwing error if the user doesn't exist with the give user id
+  if (userExistsResult.rowCount === 0)
+    throw ErrorResponse.notFound("User not found");
+
+
+// updating todo with the associated id
+const todosResult = await getTodosWithOptions(+userId!, +page!, +pageSize!, searchQuery as string, filterCompleted, sortBy==="title" ? "title" : "completed");
+
+
+  // You can also retrieve the total count of todos for pagination purposes
+
+  const totalCountResult = await totalTodos(userId);
+ 
+  const totalPages= Math.ceil(totalCountResult / pageSize)
+
+return {...todosResult}; // Return all the details
+};

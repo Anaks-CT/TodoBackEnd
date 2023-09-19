@@ -4,7 +4,6 @@ import { checkExistingUser, createNewUser } from "../helper/userCRUD";
 export const register = async (userName: string) => {
   // Check if the username already exists in the database
   const existingUser = await checkExistingUser(userName);
-  console.log(existingUser)
 
   if (existingUser.rowCount > 0)
     // Username already exists, throwing an error here
