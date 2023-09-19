@@ -29,10 +29,6 @@ app.use(
 app.use('/api/v1/user', userRouter)
 app.use('/api/v1/todo', todoRouter)
 
-app.get('/', (req, res) => {
-  console.log('hellow')
-  res.send('Hello, this is the root route!');
-}) 
 
 app.use("*", notFound);
 
@@ -42,6 +38,6 @@ app.use(errorHandler);
 // connecting to database
 dbConnection();
 
-app.listen(process.env.PORT, () => { 
-  console.log(`Server is running at http://localhost:${process.env.PORT}`);
+app.listen(8001, () => { 
+  console.log(`Server is running at http://localhost:8001`);
 });
