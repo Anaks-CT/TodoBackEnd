@@ -30,6 +30,11 @@ Once all the packages have been installed, open terminal and run the following c
 ```
 npm run build
 ```
+Set the environment variables by creating a .env file in the root of the folder
+JWT_SECRET=[your jwt secret]
+NODEMAILER_EMAIL=[your nodemailer email]
+NODEMAILER_PASSWORD=[your nodemailer password]
+
 Once the dist folder is created run the following code in command line :
 ```
 npm run start
