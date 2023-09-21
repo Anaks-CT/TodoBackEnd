@@ -17,12 +17,12 @@ export const todoUpdateSchema = yup.object().shape({
 });
 
 export const userSchema = yup.object().shape({
-  userName: yup
-  .string()
-  .trim()
-  .required("User name can not be empty")
-  .test("isPerfectString", "Enter a valid Username", (arg) =>
-    /^[A-Za-z ]+$/.test(arg)
-  ),
+  email: yup
+    .string()
+    .trim()
+    .required("Enter you email")
+    .test("isvalidEmail", "Enter a valid Email", (arg) =>
+      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(arg)
+    ),
 });
 

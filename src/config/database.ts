@@ -54,7 +54,7 @@ async function createUserTableIfNotExists() {
       await pool.query(`
           CREATE TABLE ${tableName} (
             id SERIAL PRIMARY KEY,
-            username VARCHAR(255) UNIQUE NOT NULL
+            email VARCHAR(255) UNIQUE NOT NULL
           )
         `);
     }

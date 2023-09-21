@@ -109,7 +109,6 @@ export const todoSearchService = async (
 ) => {
   // throwing error if userid is not there
   invalidId(userId);
-
   if (page < 1)
     throw ErrorResponse.badRequest("Page number cannot be less than 1");
   if (pageSize < 1)

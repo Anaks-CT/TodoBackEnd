@@ -5,17 +5,18 @@ import { updateTodo } from "../controller/todo/updateTodo.controller";
 import { deleteTodo } from "../controller/todo/deleteTodo.controller";
 import { validateBody } from "../middleware/validateBody";
 import { todoSchema, todoUpdateSchema } from "../utils/SchemaValidation";
+import { userVerify } from "../middleware/authMiddleware";
 
 const todoRouter = Router();
 
+todoRouter.route("/service").get(userVerify, todoService)
 todoRouter
   .route("/:id?")
-  .get(getAllUserTodo)
-  .post(validateBody(todoSchema), createTodo)
-  .patch(validateBody(todoUpdateSchema), updateTodo)
-  .delete(deleteTodo);
+  .get(userVerify, getAllUserTodo)
+  .post(userVerify, validateBody(todoSchema), createTodo)
+  .patch(userVerify, validateBody(todoUpdateSchema), updateTodo)
+  .delete(userVerify, deleteTodo);
 
-todoRouter.route("/service/:id").get(todoService)
 
 
 export default todoRouter;

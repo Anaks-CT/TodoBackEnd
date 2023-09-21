@@ -2,9 +2,9 @@ import expressAsyncHandler from "express-async-handler";
 import { register } from "../../service/user.service";
 
 export const userSignup = expressAsyncHandler(async (req, res) => {
-  const { userName } = req.body;
+  const { email } = req.body;
 
-  await register(userName);
+  await register(email);
 
   res
     .status(201)

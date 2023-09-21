@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 
 const notFound=asyncHandler(async(req,res)=>{
 
-    res.json({
+    res.status(404).json({
         success:false,
         message:'invalid api endpont'
     })

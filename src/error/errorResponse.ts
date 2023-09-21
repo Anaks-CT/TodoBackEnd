@@ -15,6 +15,10 @@ class ErrorResponse extends Error {
     static internalError(msg: string) {
       return new ErrorResponse(500, msg);
     }
+
+    static unauthorized(msg: string) {
+      return new ErrorResponse(401, msg);
+    }
   }
   
   export default ErrorResponse;
