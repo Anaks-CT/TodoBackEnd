@@ -9,6 +9,7 @@ A RESTful API using NodeJS leveraging ExpressJS and postgreSQL
 - CreateReadUpdateDelete(CRUD) operations of todos
 - fully-fledged search, filter, and sort functionality
 - Pagination with user defined page and pageSize
+- jwt authorization
 
 ## Technologies Used
 
@@ -16,6 +17,7 @@ A RESTful API using NodeJS leveraging ExpressJS and postgreSQL
 - TypeScript for type checking
 - PostgreSQL to store the data
 - BodyValidation middleware
+
 
 ## Install
 
